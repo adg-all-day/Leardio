@@ -1,0 +1,20 @@
+<!-- convertor/templates/convertor/upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Video</title>
+</head>
+<body>
+    <h1>Upload Video</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="video">
+        <button type="submit">Upload</button>
+    </form>
+    {% if processed_audio_url %}
+        <h2>Processed Audio</h2>
+        <a href="{{ processed_audio_url }}">Download</a>
+    {% endif %}
+</body>
+</html>
