@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 # convertor/views.py
 
-from django.shortcuts import render
 
 def landing_page(request):
     return render(request, 'pages/home.html')
