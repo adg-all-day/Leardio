@@ -1,66 +1,56 @@
-"""# convertor/utils.py
+from moviepy.editor import VideoFileClip
+from google.cloud import speech, texttospeech
+import io
+import openai
+from pydub import AudioSegment
 
-import os
-import pandas as pd
-from PIL import Image
+openai.api_key = ''
 
-def read_csv(file_path):
-    """
-    #Reads a CSV file and returns a pandas DataFrame.
-    #:param file_path: str - Path to the CSV file
-    #:return: pd.DataFrame
-"""
+def extract_audio(video_path, audio_path):
+    video = VideoFileClip(video_path)
+    video.audio.write_audiofile(audio_path)
+
+import speech_recognition as sr
+
+def transcribe_audio(audio_path):
+    recognizer = sr.Recognizer()
+    transcript = ""
+    
     try:
-        df = pd.read_csv(file_path)
-        return df
+        with sr.AudioFile(audio_path) as source:
+            audio = recognizer.record(source)  # Read the entire audio file
+
+        transcript = recognizer.recognize_google(audio)
+    except sr.UnknownValueError:
+        print("Google Speech Recognition could not understand audio")
+    except sr.RequestError as e:
+        print(f"Could not request results from Google Speech Recognition service; {e}")
     except FileNotFoundError:
-        print(f"File not found: {file_path}")
-    except pd.errors.EmptyDataError:
-        print(f"No data: {file_path}")
-    except pd.errors.ParserError:
-        print(f"Parsing error: {file_path}")
+        print(f"File not found: {audio_path}")
     except Exception as e:
-        print(f"Error reading {file_path}: {e}")
-    return None
+        print(f"Error processing audio {audio_path}: {e}")
 
-def save_csv(df, file_path):
-    """
-    #Saves a pandas DataFrame to a CSV file.
-    #:param df: pd.DataFrame - DataFrame to save
-    #:param file_path: str - Path to save the CSV file
-"""
-    try:
-        df.to_csv(file_path, index=False)
-        print(f"File saved: {file_path}")
-    except Exception as e:
-        print(f"Error saving {file_path}: {e}")
+    return transcript
 
-def convert_image_to_grayscale(input_path, output_path):
-    """
-    #Converts an image to grayscale.
-    #:param input_path: str - Path to the input image
-    #:param output_path: str - Path to save the grayscale image
-"""
-    try:
-        image = Image.open(input_path).convert('L')
-        image.save(output_path)
-        print(f"Image saved: {output_path}")
-    except FileNotFoundError:
-        print(f"File not found: {input_path}")
-    except Exception as e:
-        print(f"Error processing image {input_path}: {e}")
+# Example usage:
+# audio_file_path = "path/to/your/audio/file.wav"
+# print(transcribe_audio(audio_file_path))
 
-def resize_image(input_path, output_path, size):
-    """
-    #Resizes an image to the given size.
-    #:param input_path: str - Path to the input image
-    #:param output_path: str - Path to save the resized image
-    #:param size: tuple - New size (width, height)
-"""
-    try:
-        image = Image.open(input_path)
-        image = image.resize(size, Image.ANTIALIAS)
-        image.save(output_path)
-        print(f"Image saved: {output_path}")
-    except FileNotFoundError
-    """
+
+def enhance_text(text):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt= """The following is a transcript of a tutorial video, enhance 
+                  it so that it can ba assimilated by the visually impaired 
+                  who have no access to the visual aid of the video. Add 
+                  more data from internet sources where needed and start the 
+                  text with a greeting and a briefing of the course and 
+                  things you would cover: """ + text,
+        max_tokens=1000
+    )
+    enhanced_text = response.choices[0].text.strip()
+    return enhanced_text
+
+def convert_wav_to_mp3(wav_path, mp3_path):
+    audio = AudioSegment.from_wav(wav_path)
+    audio.export(mp3_path, format="mp3")
