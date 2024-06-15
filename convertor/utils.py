@@ -69,26 +69,6 @@ def enhance_text(text):
     enhanced_text = response.choices[0].text.strip()
     return enhanced_text
 
-# Example usage:
-# enhanced_text = enhance_text("Your input text here")
-# print(enhanced_text)
-
-
-
-"""def enhance_text(text):
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt= """"""The following is a transcript of a tutorial video, enhance 
-                  it so that it can ba assimilated by the visually impaired 
-                  who have no access to the visual aid of the video. Add 
-                  more data from internet sources where needed and start the 
-                  text with a greeting and a briefing of the course and 
-                  things you would cover:""" """ + text,
-        max_tokens=1000
-    )
-    enhanced_text = response.choices[0].text.strip()
-    return enhanced_text"""
-
 
 
 def text_to_audio(text, audio_path):
@@ -112,22 +92,3 @@ def text_to_audio(text, audio_path):
     import os
     os.remove(temp_wav_path)
 
-# Example usage:
-# text_to_audio("Hello, this is a test.", "output_audio.mp3")
-
-"""def text_to_audio(text, audio_path):
-    client = texttospeech.TextToSpeechClient()
-    synthesis_input = texttospeech.SynthesisInput(text=text)
-    voice = texttospeech.VoiceSelectionParams(
-        language_code="en-US",
-        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
-    )
-    audio_config = texttospeech.AudioConfig(
-        audio_encoding=texttospeech.AudioEncoding.MP3
-    )
-    response = client.synthesize_speech(
-        input=synthesis_input, voice=voice, audio_config=audio_config
-    )
-    with open(audio_path, "wb") as out:
-        out.write(response.audio_content)
-"""
