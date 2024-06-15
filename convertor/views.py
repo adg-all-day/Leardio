@@ -20,4 +20,4 @@ def upload_video(request):
         return render(request, 'convertorApp/upload.html', {
             'processed_audio_url': processed_audio_url
         })
-    return render(request, 'convertor/upload.html')
+    return render(request, 'convertorApp/upload.html')
