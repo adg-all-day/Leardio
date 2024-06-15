@@ -28,6 +28,6 @@ moviepy==1.0.3
 google-cloud-speech==2.16.1
 google-cloud-texttospeech==2.10.1
 openai==0.27.7
-speech_recognition
+SpeechRecognition
 pyttsx3
 pydub
