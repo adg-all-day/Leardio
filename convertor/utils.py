@@ -7,7 +7,7 @@ import pyttsx3
 from pydub import AudioSegment
 
 
-openai.api_key = 'sk-proj-aBxUGRLmzknI6H9edNwsT3BlbkFJCRz40ferec6qsASHRoL3'
+openai.api_key = '*****'
 
 def extract_audio(video_path, audio_path):
     video = VideoFileClip(video_path)
