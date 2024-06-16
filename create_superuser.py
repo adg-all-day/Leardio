@@ -1,12 +1,10 @@
-# create_superuser.py
-
 import os
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_project.settings')
 django.setup()
 
-from accounts.models import CustomUser  # Import your custom user model
+from accounts.models import CustomUser 
 
 username = 'tomiwa'
 email = 'tomadeaga@gmail.com'
