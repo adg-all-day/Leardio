@@ -32,6 +32,8 @@ def transcribe_audio(audio_path):
         print(f"File not found: {audio_path}")
     except Exception as e:
         print(f"Error processing audio {audio_path}: {e}")
+    
+    print(transcript)
 
     return transcript
 
