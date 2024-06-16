@@ -8,7 +8,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("", include("pages.urls")),
     path('', home_page, name='landing'),
-    path('convert/', include('convertorApp.urls'))
+    path('convert/', include('convertor.urls'))
 ]
 
 if settings.DEBUG:
